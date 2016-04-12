@@ -21,4 +21,5 @@ public final class Constants {
     static final int REQUEST_RESOLVE_ERROR = 1001;
 
     static final String KEY_CACHED_MESSAGES = "cached-messages";
+    static final String ALREADY_REGISTERED = "already-registered";
 }
