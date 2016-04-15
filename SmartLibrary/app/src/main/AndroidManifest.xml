@@ -55,6 +55,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <receiver
+            android:name=".ActiveUserReceiver"
+            android:label="@string/friends"
+            android:theme="@style/AppTheme.NoActionBar">
+        </receiver>
+
         <service
             android:name=".BackgroundSubscribeIntentService"
             android:exported="false" />

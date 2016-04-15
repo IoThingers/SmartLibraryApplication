@@ -1,6 +1,7 @@
 package com.google.android.gms.nearby.messages.samples.nearbybackgroundbeacons;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -73,6 +75,8 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
      * Entry point to Google Play Services.
      */
     private GoogleApiClient mGoogleApiClient;
+
+    private PendingIntent pendingIntent;
 
     // Fields for tracking subscription state.
     private SubState mSubState = SubState.NOT_SUBSCRIBING;
@@ -135,6 +139,25 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         params.put("group-id", "123");
         params.put("user-id", "123");
         invokeWS(params);
+
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.MONTH, 6);
+        calendar.set(Calendar.YEAR, 2013);
+        calendar.set(Calendar.DAY_OF_MONTH, 13);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 48);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.AM_PM,Calendar.PM);
+
+        Intent myIntent = new Intent(RegisterActivity.this, ActiveUserReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(RegisterActivity.this, 0, myIntent,0);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 30 * 1, pendingIntent);
+
     }
 
 

@@ -21,14 +21,26 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.android.smartlibrary.entities.User;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageListener;
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
+import java.net.SocketException;
 import java.util.List;
 
 
@@ -42,6 +54,7 @@ public class BackgroundSubscribeIntentService extends IntentService {
     private static final int MESSAGES_NOTIFICATION_ID = 1;
     private static final int NUM_MESSAGES_IN_NOTIFICATION = 5;
     private static final String TAG = BackgroundSubscribeIntentService.class.getSimpleName();
+    SharedPreferences user;
     public BackgroundSubscribeIntentService() {
         super("BackgroundSubscribeIntentService");
     }
@@ -50,7 +63,10 @@ public class BackgroundSubscribeIntentService extends IntentService {
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "sharique service onCreate() called");
-        updateNotification();
+        user = getSharedPreferences(getApplicationContext().getPackageName(),
+                Context.MODE_PRIVATE);
+
+        //updateNotification();
     }
 
     @Override
@@ -62,13 +78,22 @@ public class BackgroundSubscribeIntentService extends IntentService {
                 public void onFound(Message message) {
                     Log.i(TAG, "sharique onFound called");
                     Utils.saveFoundMessage(getApplicationContext(), message);
-                    updateNotification();
+                    RequestParams params = new RequestParams();
+                    params.put("user-id", user.getString("userid", ""));
+                    params.put("is-active", "true");
+                    invokeWSUserActive(params);
+                    //updateNotification();
                 }
 
                 @Override
                 public void onLost(Message message) {
                     Utils.removeLostMessage(getApplicationContext(), message);
-                    updateNotification();
+                    Log.i(TAG, "sharique onLost called");
+                    RequestParams params = new RequestParams();
+                    params.put("user-id", user.getString("userid", ""));
+                    params.put("is-active", "false");
+                    invokeWSUserActive(params);
+                    //updateNotification();
                 }
             });
         }
@@ -122,4 +147,60 @@ public class BackgroundSubscribeIntentService extends IntentService {
         return TextUtils.join(newline, messages.subList(0, NUM_MESSAGES_IN_NOTIFICATION)) +
                 newline + "&#8230;";
     }
+
+    public void invokeWSUserActive(RequestParams params)
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(Utils.url + "users/set-user-activity", params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String response) {
+
+            }
+            // When the response returned by REST has Http response code other than '200'
+            @Override
+            public void onFailure(int statusCode, Throwable error,
+                                  String content) {
+
+            }
+        });
+
+    }
+
+    /*public void invokeWS()
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        HttpEntity body = null;
+        try{
+            body = new StringEntity("user-id=61961544&is-active=true"); //new StringEntity(new Gson().toJson(params));
+            client.post(getApplicationContext(), Utils.url + "users/set-user-activity", body, "application/json", new AsyncHttpResponseHandler(){
+                //client.get(Utils.url + "groups/add-user-to-group", params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(String response) {
+                    //Toast.makeText(getApplicationContext(), "Registered succesfully " + response, Toast.LENGTH_LONG).show();
+                }
+                // When the response returned by REST has Http response code other than '200'
+                @Override
+                public void onFailure(int statusCode, Throwable error,
+                                      String content) {
+                    if(statusCode == 404){
+                        //Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                    }
+                    // When Http response code is '500'
+                    else if(statusCode == 500){
+                        //Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                    }
+                    // When Http response code other than 404, 500
+                    else{
+                        //Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+        catch (UnsupportedEncodingException ex)
+        {
+            //Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not register", Toast.LENGTH_LONG).show();
+        }
+
+
+    }*/
 }

@@ -3,17 +3,28 @@ package com.google.android.gms.nearby.messages.samples.nearbybackgroundbeacons;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.android.smartlibrary.entities.User;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public final class Utils {
+
+    static final String url = "http://anyonethere.cloudapp.net:8080/";
 
     /**
      * Fetches message strings stored in {@link SharedPreferences}.
@@ -84,4 +95,5 @@ public final class Utils {
                 context.getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);
     }
+
 }
