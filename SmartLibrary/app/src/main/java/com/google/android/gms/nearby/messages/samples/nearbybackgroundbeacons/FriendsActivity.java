@@ -12,6 +12,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 
 import com.android.smartlibrary.entities.RestResponse;
@@ -57,7 +59,7 @@ public class FriendsActivity extends ListActivity {
 
         List<String> friends = new ArrayList<>();
         RequestParams params = new RequestParams();
-        params.put("user-id", "65132049");//user.getString("userid", ""));
+        params.put("user-id", user.getString("userid", ""));
         invokeWS(params, friends);
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, friends);
@@ -81,22 +83,35 @@ public class FriendsActivity extends ListActivity {
                 {
                     friends.add(users.get(i).getName());
                 }*/
-                JSONArray users = null, responsecode = null, responsemessage = null, type = null;
+                JSONArray users = null;
+                int responsecode;
                 if (content != null) {
                     try {
                         JSONObject jsonObj = new JSONObject(content);
-
-                        // Getting JSON Array node
                         users = jsonObj.getJSONArray("response");
-                        /*responsecode = jsonObj.getJSONArray("responseCode");
-                        responsemessage = jsonObj.getJSONArray("responseMessage");
-                        type = jsonObj.getJSONArray("type");*/
 
-                        for (int i = 0; i < users.length(); i++) {
-                            friends.add(users.getJSONObject(i).get("name").toString());
-                            Log.i(TAG, "sharique friend " + i + " = " + users.getJSONObject(i).get("name").toString());
+                        responsecode = responsecode = jsonObj.getInt("responseCode");;
+                        if(responsecode == 200)
+                        {
+
+                            for (int i = 0; i < users.length(); i++) {
+                                friends.add(users.getJSONObject(i).get("name").toString());
+                                Log.i(TAG, "sharique friend " + i + " = " + users.getJSONObject(i).get("name").toString());
+                            }
+                            adapter.notifyDataSetChanged();
                         }
-                        adapter.notifyDataSetChanged();
+                        else
+                        {
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Friends WebApi response code failure", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }                }

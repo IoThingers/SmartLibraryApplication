@@ -1,12 +1,15 @@
 package com.google.android.gms.nearby.messages.samples.nearbybackgroundbeacons;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,52 +25,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by sharique on 4/4/2016.
+ * Created by sharique on 4/16/2016.
  */
-public class GroupActivity extends ListActivity {
+public class CoursesActivity extends ListActivity {
     TextView content;
     SharedPreferences user;
-    String TAG = GroupActivity.class.getSimpleName();
+    String TAG = CoursesActivity.class.getSimpleName();
     ArrayAdapter<String> adapter;
-    String courseid;
-    String coursename;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        courseid = intent.getStringExtra("cid");
-        coursename = intent.getStringExtra("cname");
-        setContentView(R.layout.groups);
+        setContentView(R.layout.courses);
 
         user = getSharedPreferences(getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);
         content = (TextView)findViewById(R.id.output);
-        Log.i(TAG, "sharique oncreate called courseid =" + courseid);
+        Log.i(TAG, "sharique oncreate called");
         // Define a new Adapter
         // First parameter - Context
         // Second parameter - Layout for the row
         // Third - the Array of data
 
-        List<String> groups = new ArrayList<>();
+        List<String> courses = new ArrayList<>();
         RequestParams params = new RequestParams();
-        params.put("course-id", courseid);
-        invokeWS(params, groups);
+        params.put("user-id", "65132049");//user.getString("userid", ""));
+        invokeWS(params, courses);
         adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, groups);
+                android.R.layout.simple_list_item_1, courses);
 
         // Assign adapter to List
         setListAdapter(adapter);
     }
 
-    public void invokeWS(RequestParams params, final List<String> groups)
+    public void invokeWS(RequestParams params, final List<String> courses)
     {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(Utils.url + "groups/show-groups-for-course", params, new AsyncHttpResponseHandler() {
+        client.get(Utils.url + "courses/show-all-courses", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String content) {
                 super.onSuccess(statusCode, content);
-                Log.i(TAG, "sharique groups " + content);
+                Log.i(TAG, "sharique reponse " + content);
                 /*Gson gson = new Gson();
                 RestResponse<List<User>> restResponse = gson.fromJson(content, RestResponse.class);
                 List<User> users = restResponse.getResponse();
@@ -81,21 +79,20 @@ public class GroupActivity extends ListActivity {
                     try {
                         JSONObject jsonObj = new JSONObject(content);
 
-                        // Getting JSON Array node
                         users = jsonObj.getJSONArray("response");
                         responsecode = jsonObj.getInt("responseCode");
+                        Log.i(TAG, "sharique responsecode " + responsecode + ", arraySize = " + users.length());
                         if(responsecode == 200)
                         {
                             for (int i = 0; i < users.length(); i++) {
-                                groups.add(users.getJSONObject(i).get("name").toString());
-                                Log.i(TAG, "sharique groups " + i + " = " + users.getJSONObject(i).get("name").toString());
+                                courses.add(users.getJSONObject(i).get("name").toString() + "-" + users.getJSONObject(i).get("id").toString());
+                                Log.i(TAG, "sharique courses " + i + " = " + users.getJSONObject(i).get("name").toString());
                             }
                             adapter.notifyDataSetChanged();
                         }
                         else
                         {
                             runOnUiThread(new Runnable() {
-
                                 @Override
                                 public void run() {
                                     Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_LONG).show();
@@ -118,7 +115,7 @@ public class GroupActivity extends ListActivity {
     }
 
 
-    /*@Override
+    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
         super.onListItemClick(l, v, position, id);
@@ -127,10 +124,14 @@ public class GroupActivity extends ListActivity {
         int itemPosition     = position;
 
         // ListView Clicked item value
-        String  itemValue    = (String) l.getItemAtPosition(position);
+        String[]  itemValue    = ((String) l.getItemAtPosition(position)).split("-");
 
-        content.setText("Click : \n  Position :"+itemPosition+"  \n  ListItem : " +itemValue);
+        Intent intent = new Intent(CoursesActivity.this, GroupActivity.class);
+        intent.putExtra("cname", itemValue[0]);
+        intent.putExtra("cid", itemValue[1]);
+        startActivity(intent);
 
-    }*/
+        //content.setText("Click : \n  Position :"+itemPosition+"  \n  ListItem : " +itemValue);
 
+    }
 }

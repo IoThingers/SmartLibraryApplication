@@ -106,7 +106,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         joingroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, GroupActivity.class));
+                startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
             }
         });
 
