@@ -12,16 +12,23 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import org.json.JSONArray;
 
 import com.android.smartlibrary.entities.RestResponse;
 import com.android.smartlibrary.entities.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +39,7 @@ public class FriendsActivity extends ListActivity {
     TextView content;
     SharedPreferences user;
     String TAG = FriendsActivity.class.getSimpleName();
-
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,7 +59,7 @@ public class FriendsActivity extends ListActivity {
         RequestParams params = new RequestParams();
         params.put("user-id", "65132049");//user.getString("userid", ""));
         invokeWS(params, friends);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, friends);
 
         // Assign adapter to List
@@ -62,18 +69,37 @@ public class FriendsActivity extends ListActivity {
     public void invokeWS(RequestParams params, final List<String> friends)
     {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(Utils.url + "users/get-friends-of-user", params, new AsyncHttpResponseHandler(){
+        client.get(Utils.url + "users/get-friends-of-user", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, String content) {
                 super.onSuccess(statusCode, content);
                 Log.i(TAG, "sharique friends " + content);
-                Gson gson = new Gson();
+                /*Gson gson = new Gson();
                 RestResponse<List<User>> restResponse = gson.fromJson(content, RestResponse.class);
                 List<User> users = restResponse.getResponse();
                 for(int i = 0; i < users.size(); i++)
                 {
                     friends.add(users.get(i).getName());
-                }
+                }*/
+                JSONArray users = null, responsecode = null, responsemessage = null, type = null;
+                if (content != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(content);
+
+                        // Getting JSON Array node
+                        users = jsonObj.getJSONArray("response");
+                        /*responsecode = jsonObj.getJSONArray("responseCode");
+                        responsemessage = jsonObj.getJSONArray("responseMessage");
+                        type = jsonObj.getJSONArray("type");*/
+
+                        for (int i = 0; i < users.length(); i++) {
+                            friends.add(users.getJSONObject(i).get("name").toString());
+                            Log.i(TAG, "sharique friend " + i + " = " + users.getJSONObject(i).get("name").toString());
+                        }
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }                }
             }
 
             @Override

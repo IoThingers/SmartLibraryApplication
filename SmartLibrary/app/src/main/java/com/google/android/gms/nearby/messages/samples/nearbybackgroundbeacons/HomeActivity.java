@@ -78,7 +78,7 @@ public class HomeActivity extends Activity {
                 //client.get(Utils.url + "groups/add-user-to-group", params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(String response) {
-                    Toast.makeText(getApplicationContext(), "Registered succesfully " + response, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "User created succesfully " + response, Toast.LENGTH_LONG).show();
                 }
                 // When the response returned by REST has Http response code other than '200'
                 @Override
@@ -89,20 +89,18 @@ public class HomeActivity extends Activity {
                     }
                     // When Http response code is '500'
                     else if(statusCode == 500){
-                        Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Create User Something went wrong at server end", Toast.LENGTH_LONG).show();
                     }
                     // When Http response code other than 404, 500
                     else{
-                        Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Create User Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
                     }
                 }
             });
         }
         catch (UnsupportedEncodingException ex)
         {
-            Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not register", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not Create User", Toast.LENGTH_LONG).show();
         }
-
-
     }
 }

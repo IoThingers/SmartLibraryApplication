@@ -76,7 +76,7 @@ public class BackgroundSubscribeIntentService extends IntentService {
             Nearby.Messages.handleIntent(intent, new MessageListener() {
                 @Override
                 public void onFound(Message message) {
-                    Log.i(TAG, "sharique onFound called");
+                    Log.i(TAG, "sharique  onfound message = " + message);
                     Utils.saveFoundMessage(getApplicationContext(), message);
                     RequestParams params = new RequestParams();
                     params.put("user-id", user.getString("userid", ""));

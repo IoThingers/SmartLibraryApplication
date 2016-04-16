@@ -92,18 +92,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         creategroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (mSubState) {
-                    case NOT_SUBSCRIBING:
-                    case ATTEMPTING_TO_UNSUBSCRIBE:
-                        mSubState = SubState.ATTEMPTING_TO_SUBSCRIBE;
-                        subscribe();
-                        break;
-                    case SUBSCRIBING:
-                    case ATTEMPTING_TO_SUBSCRIBE:
-                        mSubState = SubState.ATTEMPTING_TO_UNSUBSCRIBE;
-                        unsubscribe();
-                        break;
-                }
+                subscribe();
             }
         });
 
@@ -155,8 +144,8 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         Intent myIntent = new Intent(RegisterActivity.this, ActiveUserReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(RegisterActivity.this, 0, myIntent,0);
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 30 * 1, pendingIntent);
+        //AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 30 * 1, pendingIntent);
 
     }
 
@@ -177,7 +166,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         }
 
         MessageFilter filter = new MessageFilter.Builder()
-                .includeNamespacedType("capable-avatar-126623", "String")
+                .includeNamespacedType("capable-avatar-126623", "string")
                 .build();
         SubscribeOptions options = new SubscribeOptions.Builder()
                 .setFilter(filter)
@@ -221,7 +210,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                         if (status.isSuccess()) {
                             Log.i(TAG, "unsubscribed successfully");
                             mSubState = SubState.NOT_SUBSCRIBING;
-                            BackgroundSubscribeIntentService.cancelNotification(getApplicationContext());
+                            //BackgroundSubscribeIntentService.cancelNotification(getApplicationContext());
                         } else {
                             Log.i(TAG, "could not unsubscribe");
                             handleUnsuccessfulNearbyResult(status);
@@ -301,7 +290,8 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         // For simplicity, we don't handle connection failure thoroughly in this sample. Refer to
         // the following Google Play services doc for more details:
         // http://developer.android.com/google/auth/api-client.html
-        Log.w(TAG, "connection to GoogleApiClient failed");
+        Log.i(TAG, "connection to GoogleApiClient failed so subscribing again");
+        subscribe();
     }
 
     private static String connectionSuspendedCauseToString(int cause) {
