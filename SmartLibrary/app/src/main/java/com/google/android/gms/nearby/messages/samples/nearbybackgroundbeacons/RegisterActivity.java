@@ -117,35 +117,11 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
             }
         });
 
-
-        // Instantiate Progress Dialog object
-        prgDialog = new ProgressDialog(this);
-        // Set Progress Dialog Text
-        prgDialog.setMessage("Please wait...");
-        // Set Cancelable as False
-        prgDialog.setCancelable(false);
-        RequestParams params = new RequestParams();
-        params.put("group-id", "123");
-        params.put("user-id", "123");
-        invokeWS(params);
-
-
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.MONTH, 6);
-        calendar.set(Calendar.YEAR, 2013);
-        calendar.set(Calendar.DAY_OF_MONTH, 13);
-
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 48);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.AM_PM,Calendar.PM);
-
         Intent myIntent = new Intent(RegisterActivity.this, ActiveUserReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(RegisterActivity.this, 0, myIntent,0);
 
-        //AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 30 * 1, pendingIntent);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 3, pendingIntent);
 
     }
 
@@ -339,63 +315,5 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void invokeWS(RequestParams params){
-        // Show Progress Dialog
-        prgDialog.show();
-        // Make RESTful webservice call using AsyncHttpClient object
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://anyonethere.cloudapp.net:8080/groups/add-user-to-group", params, new AsyncHttpResponseHandler() {
-        //client.get("http://192.168.2.2:9999/useraccount/login/dologin",params ,new AsyncHttpResponseHandler() {
-            // When the response returned by REST has Http response code '200'
-            @Override
-            public void onSuccess(String response) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-                try {
-                    // JSON Object
-                    Toast.makeText(getApplicationContext(), "You are successfully logged in! = "+ response, Toast.LENGTH_LONG).show();
-                    JSONObject obj = new JSONObject(response);
-                    // When the JSON response has status boolean value assigned with true
-                    /*if(obj.getBoolean("status")){
-                        Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
-                        // Navigate to Home screen
-                        //navigatetoHomeActivity();
-                    }
-                    // Else display error message
-                    else{
-                        errorMsg.setText(obj.getString("error_msg"));
-                        Toast.makeText(getApplicationContext(), obj.getString("error_msg"), Toast.LENGTH_LONG).show();
-                    }*/
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-
-                }
-            }
-            // When the response returned by REST has Http response code other than '200'
-            @Override
-            public void onFailure(int statusCode, Throwable error,
-                                  String content) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-                // When Http response code is '404'
-                if(statusCode == 404){
-                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if(statusCode == 500){
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else{
-                    Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 }
