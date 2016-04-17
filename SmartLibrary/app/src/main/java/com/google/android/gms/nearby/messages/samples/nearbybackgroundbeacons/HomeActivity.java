@@ -52,20 +52,11 @@ public class HomeActivity extends Activity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
-                        Context.MODE_PRIVATE);
-                SharedPreferences.Editor edit = userDetails.edit();
-                edit.clear();
-                edit.putString("username", username.getText().toString().trim());
-                edit.putString("password", password.getText().toString().trim());
-                edit.putString("userid", emailid.getText().toString());
-                edit.putString("major", major.getText().toString());
-                edit.commit();
 
                 User user = new User(Integer.parseInt(emailid.getText().toString()), username.getText().toString(), major.getText().toString());
 
                 invokeWS(user);
-                startActivity(new Intent(HomeActivity.this, RegisterActivity.class));
+
             }
         });
     }
@@ -80,7 +71,41 @@ public class HomeActivity extends Activity {
                 //client.get(Utils.url + "groups/add-user-to-group", params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(String response) {
-                    Toast.makeText(getApplicationContext(), "User created succesfully " + response, Toast.LENGTH_LONG).show();
+                    try{
+                        JSONObject jsonObject = new JSONObject(response);
+                        int responsecode = jsonObject.getInt("responseCode");
+                        if(responsecode == 200)
+                        {
+                            boolean responsemessage = jsonObject.getBoolean("response");
+                            if(responsemessage)
+                            {
+                                SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
+                                        Context.MODE_PRIVATE);
+                                SharedPreferences.Editor edit = userDetails.edit();
+                                edit.clear();
+                                edit.putString("username", username.getText().toString().trim());
+                                edit.putString("password", password.getText().toString().trim());
+                                edit.putString("userid", emailid.getText().toString());
+                                edit.putString("major", major.getText().toString());
+                                edit.commit();
+                                Toast.makeText(getApplicationContext(), "User created succesfully ", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(HomeActivity.this, RegisterActivity.class));
+                            }
+
+                            else
+                                Toast.makeText(getApplicationContext(), "User creation failed ", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "User creation response code = " + responsecode, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (JSONException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+
+
                 }
                 // When the response returned by REST has Http response code other than '200'
                 @Override
