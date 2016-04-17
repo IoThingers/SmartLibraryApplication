@@ -21,6 +21,16 @@ public class Group
     private String courseName;
     private String creatorName;
 
+    public Group(String name, int creatorID, String creatorName, int roomID, String roomName,int courseID, String courseName){
+        this.name = name;
+        this.creatorId = creatorID;
+        this.creatorName = creatorName;
+        this.roomId = roomID;
+        this.roomName = roomName;
+        this.courseId = courseID;
+        this.courseName = courseName;
+    }
+
     /**
      * @return the roomName
      */

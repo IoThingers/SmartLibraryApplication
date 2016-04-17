@@ -79,7 +79,7 @@ public class BackgroundSubscribeIntentService extends IntentService {
                     Log.i(TAG, "sharique  beacon message found = " + message);
                     Utils.saveFoundMessage(getApplicationContext(), message);
                     RequestParams params = new RequestParams();
-                    params.put("user-id", user.getString("userid", ""));
+                    params.put("user-id", user.getString("userid", "-1"));
                     params.put("is-active", "true");
                     invokeWSUserActive(params);
                     //updateNotification();
@@ -90,7 +90,7 @@ public class BackgroundSubscribeIntentService extends IntentService {
                     Utils.removeLostMessage(getApplicationContext(), message);
                     Log.i(TAG, "sharique onLost called");
                     RequestParams params = new RequestParams();
-                    params.put("user-id", user.getString("userid", ""));
+                    params.put("user-id", user.getString("userid", "-1"));
                     params.put("is-active", "false");
                     invokeWSUserActive(params);
                     //updateNotification();

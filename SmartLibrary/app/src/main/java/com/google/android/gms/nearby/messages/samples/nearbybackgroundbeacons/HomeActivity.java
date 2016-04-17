@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 public class HomeActivity extends Activity {
 
     private Button register;
-    private EditText username, password, confirmpassword, emailid;
+    private EditText username, password, confirmpassword, emailid, major;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,7 @@ public class HomeActivity extends Activity {
         username = (EditText)findViewById(R.id.fname);
         password = (EditText)findViewById(R.id.password);
         emailid = (EditText)findViewById(R.id.emailid);
+        major = (EditText)findViewById(R.id.major);
         register = (Button)findViewById(R.id.registerbutton);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,9 +59,10 @@ public class HomeActivity extends Activity {
                 edit.putString("username", username.getText().toString().trim());
                 edit.putString("password", password.getText().toString().trim());
                 edit.putString("userid", emailid.getText().toString());
+                edit.putString("major", major.getText().toString());
                 edit.commit();
 
-                User user = new User(username.getText().toString(), emailid.getText().toString());
+                User user = new User(Integer.parseInt(emailid.getText().toString()), username.getText().toString(), major.getText().toString());
 
                 invokeWS(user);
                 startActivity(new Intent(HomeActivity.this, RegisterActivity.class));

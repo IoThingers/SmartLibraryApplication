@@ -1,57 +1,110 @@
 package com.android.smartlibrary.entities;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 
 /**
  * Created by Suryansh Singh on 4/3/2016.
  */
-public class User {
-    @SerializedName("name")
+public class User
+{
+    private int ufid;
     private String name;
-    @SerializedName("id")
-    private String ID;
-    @SerializedName("major")
     private String major;
-    @SerializedName("course_list")
-    private ArrayList courseList = new ArrayList<Course>();
+    private boolean active;
+    private List<Course> courses;
 
-    public User(String n, String uID)
+    public User(int _ufid, String _name, String _major)
     {
-        name = n;
-        ID = uID;
+        ufid = _ufid;
+        name = _name;
+        major = _major;
+    }
+    /**
+     * @return the ufid
+     */
+    public int getUfid()
+    {
+        return ufid;
     }
 
-    public String getName() {
+    /**
+     * @param ufid
+     *            the ufid to set
+     */
+    public void setUfid(int ufid)
+    {
+        this.ufid = ufid;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    /**
+     * @param name
+     *            the name to set
+     */
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public String getMajor() {
+    /**
+     * @return the major
+     */
+    public String getMajor()
+    {
         return major;
     }
 
-    public void setMajor(String major) {
+    /**
+     * @param major
+     *            the major to set
+     */
+    public void setMajor(String major)
+    {
         this.major = major;
     }
 
-    public ArrayList getCourseList() {
-        return courseList;
+    /**
+     * @return the active
+     */
+    public boolean isActive()
+    {
+        return active;
     }
 
-    public void setCourseList(ArrayList courseList) {
-        this.courseList = courseList;
+    /**
+     * @param active
+     *            the active to set
+     */
+    public void setActive(boolean active)
+    {
+        this.active = active;
+    }
+
+    /**
+     * @return the courses
+     */
+    public List<Course> getCourses()
+    {
+        return courses;
+    }
+
+    /**
+     * @param courses
+     *            the courses to set
+     */
+    public void setCourses(List<Course> courses)
+    {
+        this.courses = courses;
     }
 }

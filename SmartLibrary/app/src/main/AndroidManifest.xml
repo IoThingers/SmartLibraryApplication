@@ -74,6 +74,10 @@
         <service
             android:name=".BackgroundSubscribeIntentService"
             android:exported="false" />
+        <activity android:name=".CreateGroupActivity" >
+        </activity>
+        <activity android:name=".RoomAvailableActivity" >
+        </activity>
     </application>
 
 </manifest>

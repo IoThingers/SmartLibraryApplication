@@ -61,7 +61,7 @@ public class GroupInfoActivity extends Activity {
             @Override
             public void onClick(View v) {
                 RequestParams p = new RequestParams();
-                p.put("user-id", user.getString("userid", ""));
+                p.put("user-id", user.getString("userid", "-1"));
                 p.put("group-id", groupid);
                 invokeWStoJoin(p);
             }
@@ -79,8 +79,39 @@ public class GroupInfoActivity extends Activity {
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(Utils.url + "groups/add-user-to-group", params, new AsyncHttpResponseHandler(){
             @Override
-            public void onSuccess(String response) {
-                Log.i(TAG,"sharique succesfully joined group");
+            public void onSuccess(String content) {
+                Log.i(TAG, "sharique succesfully joined group");
+
+
+                int responsecode;
+                if (content != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(content);
+                        responsecode = jsonObj.getInt("responseCode");
+                        Log.i(TAG, "sharique responsecode " + responsecode);
+                        if(responsecode == 200)
+                        {
+                            SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
+                                    Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = userDetails.edit();
+                            edit.putString("joinedgroupid", groupid);
+                            edit.commit();
+                            Toast.makeText(getApplicationContext(), "Succesfully joined group", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Group joun failed. Are you having one?", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             // When the response returned by REST has Http response code other than '200'
             @Override

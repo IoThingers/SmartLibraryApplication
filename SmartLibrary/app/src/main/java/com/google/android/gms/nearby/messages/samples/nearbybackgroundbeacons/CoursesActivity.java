@@ -49,7 +49,7 @@ public class CoursesActivity extends ListActivity {
 
         List<String> courses = new ArrayList<>();
         RequestParams params = new RequestParams();
-        params.put("user-id", "65132049");//user.getString("userid", ""));
+        params.put("user-id", user.getString("userid", "-1"));
         invokeWS(params, courses);
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, courses);

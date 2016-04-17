@@ -45,12 +45,6 @@ tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbe
         android:layout_alignRight="@+id/create"
         android:layout_alignEnd="@+id/create" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,8 +52,7 @@ tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbe
         android:text="Choose an Action"
         android:id="@+id/action"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/editText" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -82,5 +75,17 @@ tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbe
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/delete"
         android:layout_alignEnd="@+id/delete" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave Group"
+        android:id="@+id/leave_group"
+        android:layout_below="@+id/friends"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/friends"
+        android:layout_alignEnd="@+id/friends"
+        android:singleLine="false" />
 </RelativeLayout>
 

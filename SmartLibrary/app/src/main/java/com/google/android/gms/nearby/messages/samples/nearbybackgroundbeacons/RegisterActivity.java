@@ -28,6 +28,8 @@ import com.google.android.gms.nearby.messages.MessageFilter;
 import com.google.android.gms.nearby.messages.Strategy;
 import com.google.android.gms.nearby.messages.SubscribeOptions;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,6 +51,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
     // Constants for persisting values to Bundle.
     private static final String KEY_SUB_STATE = "sub-state";
     private static final String KEY_RESOLVING_ERROR = "resolving-error";
+    SharedPreferences user;
 
     // Progress Dialog Object
     ProgressDialog prgDialog;
@@ -89,13 +92,26 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         final Button joingroup = (Button) findViewById(R.id.join);
         final Button myfriends = (Button) findViewById(R.id.friends);
         final Button delmygroup = (Button) findViewById(R.id.delete);
+        final Button leavegroup = (Button) findViewById(R.id.leave_group);
+        user = getSharedPreferences(getApplicationContext().getPackageName(),
+                Context.MODE_PRIVATE);
+
         creategroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 subscribe();
             }
         });
+        leavegroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                RequestParams params = new RequestParams();
+                params.put("user-id", user.getString("userid", "-1"));
+                params.put("group-id",  user.getString("joinedgroupid", "-1"));
+                invokeWSLeaveGroup(params);
+            }
+        });
         myfriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +129,11 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         delmygroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //we will send api call on cloud
+
+                RequestParams params = new RequestParams();
+                params.put("user-id", user.getString("userid", "-1"));
+                params.put("group-id",  user.getString("createdgroupid", "-1"));
+                invokeWSDeleteGroup(params);
             }
         });
 
@@ -287,10 +307,19 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         if (TextUtils.equals(key, Constants.KEY_CACHED_MESSAGES)) {
             List<String> messages = new ArrayList<>(Utils.getCachedMessages(this));
             mNearbyMessagesList.clear();
+            Intent i = new Intent(RegisterActivity.this,RoomAvailableActivity.class);
+            String beaconIDs ="";
             for (String message : messages) {
+                beaconIDs += " "+message;
                 mNearbyMessagesList.add(message);
-                Toast.makeText(this, "found = " + message,
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Beacon Detected with ID: "+ message,
+                        Toast.LENGTH_SHORT).show();
+
+            }
+            beaconIDs = beaconIDs.trim();
+            if(!beaconIDs.equals("")){
+                i.putExtra("beaconIDs",beaconIDs);
+                startActivity(i);
             }
         }
     }
@@ -316,4 +345,99 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void invokeWSLeaveGroup(RequestParams params)
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.delete(getApplicationContext(), Utils.url + "groups/delete-user-from-group", null, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String content) {
+                Log.i(TAG, "sharique succesfully left group");
+                int responsecode;
+                if (content != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(content);
+                        responsecode = jsonObj.getInt("responseCode");
+                        Log.i(TAG, "sharique responsecode " + responsecode);
+                        if(responsecode == 200)
+                        {
+                            SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
+                                    Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = userDetails.edit();
+                            edit.putString("joinededgroupid", "-1");
+                            edit.commit();
+                            Toast.makeText(getApplicationContext(), "Succesfully left group", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Invalid group leaving try. Are you have one?", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            // When the response returned by REST has Http response code other than '200'
+            @Override
+            public void onFailure(int statusCode, Throwable error,
+                                  String content) {
+                Log.i(TAG, "sharique leaving group failed");
+            }
+        });
+    }
+
+    private void invokeWSDeleteGroup(RequestParams params)
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.delete(getApplicationContext(), Utils.url + "groups/delete-group", null, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String content) {
+                Log.i(TAG, "sharique succesfully deleted group");
+
+                int responsecode;
+                if (content != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(content);
+                        responsecode = jsonObj.getInt("responseCode");
+                        Log.i(TAG, "sharique responsecode " + responsecode);
+                        if(responsecode == 200)
+                        {
+                            SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
+                                    Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = userDetails.edit();
+                            edit.putString("createdgroupid", "-1");
+                            edit.commit();
+                            Toast.makeText(getApplicationContext(), "Succesfully deleted group", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Invalid group deletion. Are you have one?", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            // When the response returned by REST has Http response code other than '200'
+            @Override
+            public void onFailure(int statusCode, Throwable error,
+                                  String content) {
+                Log.i(TAG, "sharique deleting group failed");
+            }
+        });
+    }	
 }
