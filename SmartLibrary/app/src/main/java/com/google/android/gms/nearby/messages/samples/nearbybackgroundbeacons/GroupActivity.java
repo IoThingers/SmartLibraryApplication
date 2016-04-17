@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +89,7 @@ public class GroupActivity extends ListActivity {
                         if(responsecode == 200)
                         {
                             for (int i = 0; i < users.length(); i++) {
-                                groups.add(users.getJSONObject(i).get("name").toString());
+                                groups.add(users.getJSONObject(i).get("name").toString() + "-" + users.getJSONObject(i).get("id").toString());
                                 Log.i(TAG, "sharique groups " + i + " = " + users.getJSONObject(i).get("name").toString());
                             }
                             adapter.notifyDataSetChanged();
@@ -118,7 +120,7 @@ public class GroupActivity extends ListActivity {
     }
 
 
-    /*@Override
+    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
         super.onListItemClick(l, v, position, id);
@@ -127,10 +129,15 @@ public class GroupActivity extends ListActivity {
         int itemPosition     = position;
 
         // ListView Clicked item value
-        String  itemValue    = (String) l.getItemAtPosition(position);
+        String[]  itemValue    = ((String) l.getItemAtPosition(position)).split("-");
 
-        content.setText("Click : \n  Position :"+itemPosition+"  \n  ListItem : " +itemValue);
+        Intent intent = new Intent(GroupActivity.this, GroupInfoActivity.class);
+        intent.putExtra("gname", itemValue[0]);
+        intent.putExtra("gid", itemValue[1]);
+        startActivity(intent);
 
-    }*/
+        //content.setText("Click : \n  Position :"+itemPosition+"  \n  ListItem : " +itemValue);
+
+    }
 
 }

@@ -59,6 +59,11 @@
             android:label="@string/friends"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".GroupInfoActivity"
+            android:label="@string/friends"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <receiver
             android:name=".ActiveUserReceiver"
