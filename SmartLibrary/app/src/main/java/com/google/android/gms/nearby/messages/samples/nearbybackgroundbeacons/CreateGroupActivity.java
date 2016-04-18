@@ -200,6 +200,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                                     Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("createdgroupid", String.valueOf(groupID));
+                            edit.putString("joinedgroupid",String.valueOf(groupID));
                             edit.commit();
                             Toast.makeText(getApplicationContext(), "Group created succesfully with GroupID: " + String.valueOf(groupID), Toast.LENGTH_LONG).show();
                         }

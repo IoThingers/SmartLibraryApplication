@@ -374,7 +374,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                             SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
                                     Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = userDetails.edit();
-                            edit.putString("joinededgroupid", "-1");
+                            edit.putString("joinedgroupid", "-1");
                             edit.commit();
                             Toast.makeText(getApplicationContext(), "Succesfully left group", Toast.LENGTH_LONG).show();
                         }
@@ -383,7 +383,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Invalid group leaving try. Are you have one?", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid group leaving! Do you have a group?", Toast.LENGTH_LONG).show();
                                 }
                             });
 

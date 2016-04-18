@@ -1,6 +1,8 @@
 package com.google.android.gms.nearby.messages.samples.nearbybackgroundbeacons;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +33,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
     List<String> rooms = new ArrayList<>();
     Button register;
     String item;
+    SharedPreferences user;
     int positionSelected;
     Map<String, String> roomsAvailable = new HashMap<>();
     @Override
@@ -38,6 +41,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_available);
         Bundle bnd = getIntent().getExtras();
+        user = getSharedPreferences(getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
         roomList = (ListView) findViewById(R.id.listView);
         String [] beaconIDs = bnd.getString("beaconIDs").split(" ");
         for(int i=0; i<beaconIDs.length; i++){
@@ -56,6 +60,8 @@ public class RoomAvailableActivity extends AppCompatActivity {
                 else if(roomsAvailable.get(item).toString().equals("false")){
                     Toast.makeText(getApplicationContext(),"Sorry The Room Is Occupied",Toast.LENGTH_LONG).show();
                 }
+                else if(!user.getString("joinedgroupid","-1").equals("-1"))
+                    Toast.makeText(getApplicationContext(),"Sorry you are already enrolled in a Group!",Toast.LENGTH_LONG).show();
                 else{
 
                     invokeWSRoomID(item.split("-")[1]);
