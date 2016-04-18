@@ -126,7 +126,10 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         joingroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
+                if(user.getString("joinedgroupid", "-1") == "-1")
+                    startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
+                else
+                    Toast.makeText(getApplicationContext(), "You are already in the group", Toast.LENGTH_SHORT).show();
             }
         });
 
