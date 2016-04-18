@@ -76,6 +76,10 @@
         </activity>
         <activity android:name=".PlaceActivity" >
         </activity>
+		<activity android:name=".FriendLocationInformationActivity" >
+        </activity>
+        <activity android:name=".MapLocationActivity" >
+        </activity>
     </application>
 
 </manifest>
