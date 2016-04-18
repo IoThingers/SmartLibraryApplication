@@ -92,7 +92,7 @@ public class GroupInfoActivity extends Activity {
                         if(responsecode == 200)
                         {
                             SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
-                                    Context.MODE_PRIVATE);
+                                   Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("joinedgroupid", groupid);
                             edit.commit();

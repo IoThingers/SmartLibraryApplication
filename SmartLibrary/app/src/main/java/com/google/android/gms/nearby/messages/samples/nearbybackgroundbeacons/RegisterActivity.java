@@ -116,6 +116,9 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         myfriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*//HardCodded Remove after Test Suryansh
+                user.edit().putString("userid","65132049");
+                user.edit().commit();*/
                 startActivity(new Intent(RegisterActivity.this, FriendsActivity.class));
             }
         });

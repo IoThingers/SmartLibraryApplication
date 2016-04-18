@@ -4,13 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:paddingRight="8dp"
 
-    <ListView android:id="@android:id/list"
+    >
+
+    <ListView
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00FF00"
+        android:layout_height="90dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="#666666"
         android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textSize="15dp"
+        android:layout_margin="30dp"
+        android:layout_centerHorizontal="true"
         android:drawSelectorOnTop="false"/>
 
     <TextView android:id="@android:id/empty"
@@ -21,11 +29,6 @@
         android:gravity="center_vertical"
         android:textAlignment="center" />
 
-    <TextView android:id="@+id/output"
-        android:background="#758AA7"
-        android:layout_height="wrap_content"
-        android:padding="1px"
-        android:textColor="#ffffff"
-        android:text="Click : " android:layout_width="fill_parent" />
+
 
 </LinearLayout>
