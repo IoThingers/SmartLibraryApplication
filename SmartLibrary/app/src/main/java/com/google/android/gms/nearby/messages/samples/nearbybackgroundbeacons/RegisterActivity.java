@@ -93,6 +93,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         final Button myfriends = (Button) findViewById(R.id.friends);
         final Button delmygroup = (Button) findViewById(R.id.delete);
         final Button leavegroup = (Button) findViewById(R.id.leave_group);
+        final Button findaplace = (Button) findViewById(R.id.findaplace);
         user = getSharedPreferences(getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);
 
@@ -134,6 +135,12 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                 params.put("user-id", user.getString("userid", "-1"));
                 params.put("group-id",  user.getString("createdgroupid", "-1"));
                 invokeWSDeleteGroup(params);
+            }
+        });
+        findaplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invokeWSSections();
             }
         });
 
@@ -396,6 +403,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
     private void invokeWSDeleteGroup(RequestParams params)
     {
         AsyncHttpClient client = new AsyncHttpClient();
+        Log.i(TAG,"sharique delete params = " + params);
         client.delete(getApplicationContext(), Utils.url + "groups/delete-group", null, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String content) {
@@ -439,5 +447,47 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                 Log.i(TAG, "sharique deleting group failed");
             }
         });
-    }	
+    }
+
+    private void invokeWSSections()
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        client.get(Utils.url + "sections/get-all-sections", params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, String content) {
+                super.onSuccess(statusCode, content);
+
+
+                int responsecode;
+                if (content != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(content);
+                        responsecode = jsonObj.getInt("responseCode");
+                        if (responsecode == 200) {
+                            Intent i = new Intent(RegisterActivity.this, PlaceActivity.class);
+                            i.putExtra("jsonresponse", content);
+                            startActivity(i);
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "invokeWSSections WebApi response code failure", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Throwable error, String content) {
+                super.onFailure(statusCode, error, content);
+                Log.i(TAG, "sharique invokeWSSections onFailure " + content);
+            }
+        });
+    }
 }

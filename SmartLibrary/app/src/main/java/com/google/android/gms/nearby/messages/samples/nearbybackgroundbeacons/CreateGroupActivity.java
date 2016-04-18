@@ -49,6 +49,7 @@ public class CreateGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        user = getSharedPreferences(getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
         register = (Button) findViewById(R.id.registerbutton);
         courseList = (ListView) findViewById(R.id.listView);
         invokeWS(courses);
@@ -108,7 +109,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                     Bundle bund = getIntent().getExtras();
                     roomID = Integer.parseInt(bund.getString("roomid"));
                     roomName = null;
-                    user = getSharedPreferences(getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
                     userID = Integer.parseInt(user.getString("userid", "-1"));
 
                     //public Group(String name, int creatorID, String creatorName, int roomID, String roomName,
@@ -196,8 +196,11 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                         if(responsecode == 200){
                             groupID = jsonObj.getInt("response");
-                            user.edit().putString("createdgroupid", String.valueOf(groupID));
-                            user.edit().commit();
+                            SharedPreferences userDetails = getSharedPreferences(getApplicationContext().getPackageName(),
+                                    Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = userDetails.edit();
+                            edit.putString("createdgroupid", String.valueOf(groupID));
+                            edit.commit();
                             Toast.makeText(getApplicationContext(), "Group created succesfully with GroupID: " + String.valueOf(groupID), Toast.LENGTH_LONG).show();
                         }
 

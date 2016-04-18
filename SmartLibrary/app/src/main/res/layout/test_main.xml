@@ -87,5 +87,17 @@ tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbe
         android:layout_alignRight="@+id/friends"
         android:layout_alignEnd="@+id/friends"
         android:singleLine="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find a Place"
+        android:id="@+id/findaplace"
+        android:layout_below="@+id/leave_group"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:singleLine="false" />
 </RelativeLayout>
 
