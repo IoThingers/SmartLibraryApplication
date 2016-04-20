@@ -18,86 +18,157 @@ android:layout_height="match_parent"
 android:paddingBottom="@dimen/activity_vertical_margin"
 android:paddingLeft="@dimen/activity_horizontal_margin"
 android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@drawable/main_wallpaper"
 android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbeacons.RegisterActivity">
 
 
 <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+
     android:text="Create Study Group"
     android:id="@+id/create"
-    android:layout_marginTop="72dp"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true" />
+    android:layout_marginTop="60dp"
+
+    android:background="@drawable/buttonshape"
+    android:textColor="#FFFFFF"
+    android:textSize="20sp"
+    android:layout_width="270dp"
+    android:layout_height="50dp"
+    android:shadowColor="#A8A8A8"
+    android:shadowDx="0"
+    android:shadowDy="0"
+    android:shadowRadius="5"
+    android:alpha="0.7"
+    android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
         android:text="Join Study Group"
         android:id="@+id/join"
         android:layout_below="@+id/create"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
         android:layout_alignRight="@+id/create"
-        android:layout_alignEnd="@+id/create" />
+        android:layout_alignEnd="@+id/create"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:alpha="0.7"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Choose an Action"
+        android:text="Welcome To Marston"
+        android:textSize="25sp"
         android:id="@+id/action"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
         android:text="Delete My Study Group"
         android:id="@+id/delete"
         android:layout_below="@+id/join"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
         android:layout_alignRight="@+id/join"
-        android:layout_alignEnd="@+id/join" />
+        android:layout_alignEnd="@+id/join"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="5dp"
+        android:alpha="0.7"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
         android:text="See My Friends"
         android:id="@+id/friends"
         android:layout_below="@+id/delete"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
         android:layout_alignRight="@+id/delete"
-        android:layout_alignEnd="@+id/delete" />
+        android:layout_alignEnd="@+id/delete"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="5dp"
+        android:alpha="0.7"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
         android:text="Leave Group"
         android:id="@+id/leave_group"
         android:layout_below="@+id/friends"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
         android:layout_alignRight="@+id/friends"
         android:layout_alignEnd="@+id/friends"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="5dp"
+        android:alpha="0.7"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
         android:text="Find a Place"
         android:id="@+id/findaplace"
         android:layout_below="@+id/leave_group"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:singleLine="false" />
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:singleLine="false"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="5dp"
+        android:alpha="0.7"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/mic"
+        android:scaleType="centerCrop"
+        android:background="@null"
+        android:src="@drawable/microphone"
+        android:alpha="0.8"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
 

@@ -4,18 +4,22 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -44,10 +49,11 @@ import com.loopj.android.http.RequestParams;
 /**
  * Created by sharique on 4/4/2016.
  */
-public class RegisterActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SharedPreferences.OnSharedPreferenceChangeListener {
+    public Toast currentToast;
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
-
+    private final int SPEECH_RECOGNITION_CODE = 1;
     // Constants for persisting values to Bundle.
     private static final String KEY_SUB_STATE = "sub-state";
     private static final String KEY_RESOLVING_ERROR = "resolving-error";
@@ -94,12 +100,24 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         final Button delmygroup = (Button) findViewById(R.id.delete);
         final Button leavegroup = (Button) findViewById(R.id.leave_group);
         final Button findaplace = (Button) findViewById(R.id.findaplace);
+        final ImageButton btnMicrophone = (ImageButton) findViewById(R.id.mic);
         user = getSharedPreferences(getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);
+
+
+
+        btnMicrophone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSpeechToText();
+            }
+        });
 
         creategroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentToast = Toast.makeText(getApplicationContext(),"Searching for a nearby smart space...",Toast.LENGTH_LONG);
+                currentToast.show();
                 subscribe();
             }
         });
@@ -109,8 +127,11 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
 
                 RequestParams params = new RequestParams();
                 params.put("user-id", user.getString("userid", "-1"));
-                params.put("group-id",  user.getString("joinedgroupid", "-1"));
-                invokeWSLeaveGroup(params);
+                params.put("group-id", user.getString("joinedgroupid", "-1"));
+                if(user.getString("joinedgroupid", "-1").equals("-1"))
+                    Toast.makeText(getApplicationContext(), "Sorry invalid leave group! Are you in a group?", Toast.LENGTH_SHORT).show();
+                else
+                    invokeWSLeaveGroup(params);
             }
         });
         myfriends.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +147,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         joingroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(user.getString("joinedgroupid", "-1") == "-1")
+                if(user.getString("joinedgroupid", "-1").equals( "-1"))
                     startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
                 else
                     Toast.makeText(getApplicationContext(), "You are already in the group", Toast.LENGTH_SHORT).show();
@@ -158,6 +179,73 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
 
     }
 
+    private void startSpeechToText() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                "Speak something...");
+        try {
+            startActivityForResult(intent, SPEECH_RECOGNITION_CODE);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    "Sorry! Speech recognition is not supported in this device.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case SPEECH_RECOGNITION_CODE: {
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String text = result.get(0);
+
+                    text = text.split(" ")[0];
+                    switch(text){
+                        case "anyone": startActivity(new Intent(RegisterActivity.this, FriendsActivity.class));
+                            break;
+
+                        case "join": if(user.getString("joinedgroupid", "-1").equals( "-1"))
+                                        startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
+                                    else
+                                        Toast.makeText(getApplicationContext(), "You are already in the group", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case "delete": RequestParams params = new RequestParams();
+                            params.put("user-id", user.getString("userid", "-1"));
+                            params.put("group-id",  user.getString("createdgroupid", "-1"));
+                            invokeWSDeleteGroup(params);
+                            break;
+
+                        case "leave": RequestParams param = new RequestParams();
+                            param.put("user-id", user.getString("userid", "-1"));
+                            param.put("group-id", user.getString("joinedgroupid", "-1"));
+                            if(user.getString("joinedgroupid", "-1").equals("-1"))
+                                Toast.makeText(getApplicationContext(), "Sorry invalid leave group! Are you in a group?", Toast.LENGTH_SHORT).show();
+                            else
+                                invokeWSLeaveGroup(param);
+                            break;
+
+                        case "create": currentToast = Toast.makeText(getApplicationContext(),"Searching for a nearby smart space...",Toast.LENGTH_LONG);
+                            currentToast.show();
+                            subscribe();
+                            break;
+
+                        case "find": invokeWSSections();
+                            break;
+
+                        default:Toast.makeText(getApplicationContext(),"Voice Command Not Recognised! Please try again.",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     private void subscribe() {
         Log.i(TAG, "attempting to subscribe");
@@ -325,12 +413,14 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
             for (String message : messages) {
                 beaconIDs += " "+message;
                 mNearbyMessagesList.add(message);
-                Toast.makeText(this, "Beacon Detected with ID: "+ message,
-                        Toast.LENGTH_SHORT).show();
+
 
             }
             beaconIDs = beaconIDs.trim();
             if(!beaconIDs.equals("")){
+                currentToast.cancel();
+                Toast.makeText(this, "Nearby smart space detected",
+                        Toast.LENGTH_SHORT).show();
                 i.putExtra("beaconIDs",beaconIDs);
                 startActivity(i);
             }
@@ -435,7 +525,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Invalid group deletion. Are you have one?", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid group deletion. Are you in a group?", Toast.LENGTH_LONG).show();
                                 }
                             });
 
@@ -450,7 +540,8 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
             @Override
             public void onFailure(int statusCode, Throwable error,
                                   String content) {
-                Log.i(TAG, "sharique deleting group failed");
+                Log.i(TAG, "suryansh deleting group failed");
+                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -493,6 +584,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
                 Log.i(TAG, "sharique invokeWSSections onFailure " + content);
+                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_LONG).show();
             }
         });
     }
