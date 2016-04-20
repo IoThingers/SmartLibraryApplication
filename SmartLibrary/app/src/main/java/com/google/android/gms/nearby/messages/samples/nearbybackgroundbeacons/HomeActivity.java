@@ -49,16 +49,24 @@ public class HomeActivity extends Activity {
         emailid = (EditText)findViewById(R.id.emailid);
         major = (EditText)findViewById(R.id.major);
         register = (Button)findViewById(R.id.registerbutton);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                User user = new User(Integer.parseInt(emailid.getText().toString()), username.getText().toString(), major.getText().toString());
+            register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        User user = new User(Integer.parseInt(emailid.getText().toString()), username.getText().toString(), major.getText().toString());
 
-                invokeWS(user);
+                        invokeWS(user);
+                    }
+                    catch(Exception e){
+                        Toast.makeText(HomeActivity.this, "Please enter a valid information", Toast.LENGTH_SHORT).show();
+                    }
 
-            }
-        });
+                }
+            });
+
+
+
     }
 
     public void invokeWS(User params)

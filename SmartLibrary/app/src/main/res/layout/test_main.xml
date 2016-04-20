@@ -99,5 +99,16 @@ tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbe
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:singleLine="false" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/mic"
+        android:scaleType="centerCrop"
+        android:background="@null"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/microphone"/>
 </RelativeLayout>
 

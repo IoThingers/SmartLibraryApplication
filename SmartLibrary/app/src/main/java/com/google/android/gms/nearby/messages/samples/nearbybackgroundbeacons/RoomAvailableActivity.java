@@ -128,7 +128,8 @@ public class RoomAvailableActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
-                //Log.i(TAG, "sharique onFailure " + content);
+                Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Suryansh Get room name failed " + content);
             }
         });
     }
