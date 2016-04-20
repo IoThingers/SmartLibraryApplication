@@ -31,40 +31,36 @@ import java.io.UnsupportedEncodingException;
 public class HomeActivity extends Activity {
 
     private Button register;
-    private EditText username, password, confirmpassword, emailid, major;
+    private EditText ufid, major;
+    SharedPreferences user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences user = getSharedPreferences(getApplicationContext().getPackageName(),
+        user = getSharedPreferences(getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);//getPreferences(MODE_PRIVATE);
-        if(user.contains("username"))
+        if(user.contains("userid"))
         {
             //Launch Activity
             startActivity(new Intent(HomeActivity.this, RegisterActivity.class));
         }
 
         setContentView(R.layout.register);
-        username = (EditText)findViewById(R.id.fname);
-        password = (EditText)findViewById(R.id.password);
-        emailid = (EditText)findViewById(R.id.emailid);
+        ufid = (EditText)findViewById(R.id.ufid);
         major = (EditText)findViewById(R.id.major);
         register = (Button)findViewById(R.id.registerbutton);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                User user = new User(Integer.parseInt(emailid.getText().toString()), username.getText().toString(), major.getText().toString());
-
-                invokeWS(user);
-
+                invokeWS();
             }
         });
     }
 
-    public void invokeWS(User params)
+    public void invokeWS()
     {
         AsyncHttpClient client = new AsyncHttpClient();
         HttpEntity body = null;
+        User params  = new User(Integer.parseInt(ufid.getText().toString()), user.getString("username", ""), major.getText().toString(), user.getString("emailid", ""));
         try{
             body = new StringEntity(new Gson().toJson(params));
             client.post(getApplicationContext(), Utils.url + "users/create-user", body, "application/json", new AsyncHttpResponseHandler(){
@@ -83,9 +79,7 @@ public class HomeActivity extends Activity {
                                         Context.MODE_PRIVATE);
                                 SharedPreferences.Editor edit = userDetails.edit();
                                 edit.clear();
-                                edit.putString("username", username.getText().toString().trim());
-                                edit.putString("password", password.getText().toString().trim());
-                                edit.putString("userid", emailid.getText().toString());
+                                edit.putString("userid", ufid.getText().toString());
                                 edit.putString("major", major.getText().toString());
                                 edit.commit();
                                 Toast.makeText(getApplicationContext(), "User created succesfully ", Toast.LENGTH_LONG).show();

@@ -16,12 +16,14 @@ public class User
     private String major;
     private boolean active;
     private List<Course> courses;
+    private String email;
 
-    public User(int _ufid, String _name, String _major)
+    public User(int _ufid, String _name, String _major, String _emailid)
     {
         ufid = _ufid;
         name = _name;
         major = _major;
+        email = _emailid;
     }
     /**
      * @return the ufid
@@ -107,4 +109,22 @@ public class User
     {
         this.courses = courses;
     }
+
+    /**
+     * @return the email
+     */
+    public String getEmail()
+    {
+        return email;
+    }
+
+    /**
+     * @param email
+     *            the email to set
+     */
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
 }

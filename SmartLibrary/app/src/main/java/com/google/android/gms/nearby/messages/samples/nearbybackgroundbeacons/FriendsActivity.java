@@ -67,7 +67,7 @@ public class FriendsActivity extends ListActivity {
 
 
         RequestParams params = new RequestParams();
-        //params.put("user-id", user.getString("userid", "-1"));
+        //params.put("user-id", user.getString("ufid", "-1"));
         params.put("user-id", "65132049");
         //Test Suryansh
         Log.i(TAG, "Current UserID:" + user.getString(("userid"), "-1"));
@@ -218,7 +218,7 @@ public class FriendsActivity extends ListActivity {
 
         RequestParams params = new RequestParams();
 
-                //params.put("user-id", user.getString("userid", "-1"));
+                //params.put("user-id", user.getString("ufid", "-1"));
                 //Test Suryansh
 
         //params.put("user-id", friendNameID.get(itemValue));
