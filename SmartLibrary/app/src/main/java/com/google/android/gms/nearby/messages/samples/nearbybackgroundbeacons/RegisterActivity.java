@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -48,7 +49,7 @@ import com.loopj.android.http.RequestParams;
 /**
  * Created by sharique on 4/4/2016.
  */
-public class RegisterActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public Toast currentToast;
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -102,6 +103,8 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
         final ImageButton btnMicrophone = (ImageButton) findViewById(R.id.mic);
         user = getSharedPreferences(getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);
+
+
 
         btnMicrophone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +238,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
                         case "find": invokeWSSections();
                             break;
 
-                        default:Toast.makeText(getApplicationContext(),"Voice Command Not Recognised! Please try again.",Toast.LENGTH_SHORT);
+                        default:Toast.makeText(getApplicationContext(),"Voice Command Not Recognised! Please try again.",Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -537,7 +540,8 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
             @Override
             public void onFailure(int statusCode, Throwable error,
                                   String content) {
-                Log.i(TAG, "sharique deleting group failed");
+                Log.i(TAG, "suryansh deleting group failed");
+                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -580,6 +584,7 @@ public class RegisterActivity extends Activity implements GoogleApiClient.Connec
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
                 Log.i(TAG, "sharique invokeWSSections onFailure " + content);
+                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_LONG).show();
             }
         });
     }

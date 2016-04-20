@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -111,6 +112,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
                             rooms.add(users.get("name").toString() + "-" + users.get("id").toString());
                             adapter.notifyDataSetChanged();
                         } else {
+                            Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_LONG).show();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -128,7 +130,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
-                Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_LONG).show();
                 Log.i(TAG, "Suryansh Get room name failed " + content);
             }
         });

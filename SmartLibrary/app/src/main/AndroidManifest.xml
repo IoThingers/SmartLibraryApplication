@@ -38,32 +38,25 @@
         </activity>
 
         <activity
-            android:name=".RegisterActivity"
-            android:label="@string/groups"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".RegisterActivity">
         </activity>
 
         <activity
-            android:name=".GroupActivity"
-            android:label="@string/groups">
+            android:name=".GroupActivity">
         </activity>
 
         <activity
-            android:name=".FriendsActivity"
-            android:label="@string/friends">
+            android:name=".FriendsActivity">
         </activity>
         <activity
-            android:name=".CoursesActivity"
-            android:label="@string/friends">
+            android:name=".CoursesActivity">
         </activity>
         <activity
-            android:name=".GroupInfoActivity"
-            android:label="@string/friends">
+            android:name=".GroupInfoActivity">
         </activity>
 
         <receiver
-            android:name=".ActiveUserReceiver"
-            android:label="@string/friends">
+            android:name=".ActiveUserReceiver">
         </receiver>
 
         <service
