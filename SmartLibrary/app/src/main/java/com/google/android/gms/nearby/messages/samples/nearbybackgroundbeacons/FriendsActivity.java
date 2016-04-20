@@ -67,8 +67,8 @@ public class FriendsActivity extends ListActivity {
 
 
         RequestParams params = new RequestParams();
-        //params.put("user-id", user.getString("ufid", "-1"));
-        params.put("user-id", "65132049");
+        params.put("user-id", user.getString("userid", "-1"));
+        //params.put("user-id", "65132049");
         //Test Suryansh
         Log.i(TAG, "Current UserID:" + user.getString(("userid"), "-1"));
         invokeWS(params, friends);
@@ -197,7 +197,7 @@ public class FriendsActivity extends ListActivity {
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
                 Log.i(TAG, "suryansh onFailure " + content);
-                Toast.makeText(getApplicationContext(), "Friend is not near any beacon or Enrolled in a group", Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(), "Friend is not near any beacon or Enrolled in a group", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -218,12 +218,12 @@ public class FriendsActivity extends ListActivity {
 
         RequestParams params = new RequestParams();
 
-                //params.put("user-id", user.getString("ufid", "-1"));
+                //params.put("user-id", user.getString("userid", "-1"));
                 //Test Suryansh
 
-        //params.put("user-id", friendNameID.get(itemValue));
+        params.put("user-id", friendNameID.get(itemValue));
         //hard codded suryansh remove
-        params.put("user-id","258369147");
+        //params.put("user-id","258369147");
         Log.i(TAG, "List Selected User:" + params.toString());
         invokeWSFindFriendLocation(params);
                 //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_LONG).show();

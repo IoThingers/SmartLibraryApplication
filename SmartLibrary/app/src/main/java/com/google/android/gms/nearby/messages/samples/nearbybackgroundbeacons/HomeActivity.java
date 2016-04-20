@@ -51,6 +51,7 @@ public class HomeActivity extends Activity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+				
                 invokeWS();
             }
         });
