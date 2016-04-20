@@ -122,6 +122,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
 
                         }
                     } catch (JSONException e) {
+                        Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }
