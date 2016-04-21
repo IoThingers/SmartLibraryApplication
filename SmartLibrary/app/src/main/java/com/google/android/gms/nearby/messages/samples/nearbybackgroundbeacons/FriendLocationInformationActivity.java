@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,10 @@ import java.util.ArrayList;
 public class FriendLocationInformationActivity extends AppCompatActivity {
     TextView fname,gname,coursename,creatorname, roomname;
     Button flocation, gjoin;
+    ArrayList<String> memberList = new ArrayList<String>();
+    ArrayAdapter<String> memberListAdapter;
     LinearLayout.LayoutParams layout_params;
+    ListView currentMembers;
     String clickedgroupname, clickedcoursename, clickedcreatorname, clickedroomname,groupid,roomid;
     String TAG = FriendLocationInformationActivity.class.getSimpleName();
     @Override
@@ -42,6 +47,7 @@ public class FriendLocationInformationActivity extends AppCompatActivity {
         flocation.setText("Locate ("+ intent.getStringExtra("name")+") On Map");
         gjoin.setText("Join ("+ intent.getStringExtra("name")+ "'s) Group");
         String groupString = intent.getStringExtra("group");
+
 
         layout_params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -69,18 +75,19 @@ public class FriendLocationInformationActivity extends AppCompatActivity {
             for (int i = 0; i < users.length(); i++) {
                 //members.add(users.getJSONObject(i).get("name").toString());
 
-                tempString += "\n"+users.getJSONObject(i).get("name").toString();
+                memberList.add(users.getJSONObject(i).get("name").toString());
 
 
                 Log.i(TAG, "sharique group members " + i + " = " + users.getJSONObject(i).get("name").toString());
             }
-            temp.setText(tempString);
+            currentMembers.setAdapter(memberListAdapter);
 
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         gjoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
