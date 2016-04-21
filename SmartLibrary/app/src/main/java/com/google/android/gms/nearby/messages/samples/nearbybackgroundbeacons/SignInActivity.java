@@ -182,7 +182,6 @@ public class SignInActivity extends AppCompatActivity implements
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             String emailid = acct.getEmail(), username = acct.getDisplayName(), ufid = user.getString("user-id", "-1"), major = user.getString("major", "");
-
             SharedPreferences.Editor edit = user.edit();
             edit.putString("emailid", emailid);
             edit.putString("username", username);

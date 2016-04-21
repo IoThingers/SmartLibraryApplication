@@ -108,6 +108,8 @@ public class RoomAvailableActivity extends AppCompatActivity {
                         responsecode = jsonObj.getInt("responseCode");
 
                         if (responsecode == 200) {
+                            Toast.makeText(getApplicationContext(), "Nearby smart space detected",
+                                    Toast.LENGTH_SHORT).show();
                             roomsAvailable.put((users.get("name").toString() + "-" + users.get("id").toString()), users.get("available").toString());
                             rooms.add(users.get("name").toString() + "-" + users.get("id").toString());
                             adapter.notifyDataSetChanged();

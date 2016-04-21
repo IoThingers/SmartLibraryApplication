@@ -147,10 +147,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         joingroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(user.getString("joinedgroupid", "-1").equals( "-1"))
-                    startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
-                else
-                    Toast.makeText(getApplicationContext(), "You are already in the group", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
             }
         });
 
@@ -209,10 +206,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                         case "anyone": startActivity(new Intent(RegisterActivity.this, FriendsActivity.class));
                             break;
 
-                        case "join": if(user.getString("joinedgroupid", "-1").equals( "-1"))
-                                        startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
-                                    else
-                                        Toast.makeText(getApplicationContext(), "You are already in the group", Toast.LENGTH_SHORT).show();
+                        case "join": startActivity(new Intent(RegisterActivity.this, CoursesActivity.class));
                             break;
 
                         case "delete": RequestParams params = new RequestParams();
@@ -419,8 +413,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             beaconIDs = beaconIDs.trim();
             if(!beaconIDs.equals("")){
                 currentToast.cancel();
-                Toast.makeText(this, "Nearby smart space detected",
-                        Toast.LENGTH_SHORT).show();
+
                 i.putExtra("beaconIDs",beaconIDs);
                 startActivity(i);
             }
@@ -517,6 +510,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                     Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("createdgroupid", "-1");
+                            edit.putString("joinedgroupid", "-1");
                             edit.commit();
                             Toast.makeText(getApplicationContext(), "Succesfully deleted group", Toast.LENGTH_SHORT).show();
                         }

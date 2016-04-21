@@ -69,7 +69,10 @@ public class GroupInfoActivity extends Activity {
                 RequestParams p = new RequestParams();
                 p.put("user-id", user.getString("userid", "-1"));
                 p.put("group-id", groupid);
-                invokeWStoJoin(p);
+                if(user.getString("joinedgroupid", "-1").equals("-1"))
+                    invokeWStoJoin(p);
+                else
+                    Toast.makeText(getApplicationContext(), "Please leave the already joined group first", Toast.LENGTH_SHORT).show();
             }
         });
         layout_params = new LinearLayout.LayoutParams(
