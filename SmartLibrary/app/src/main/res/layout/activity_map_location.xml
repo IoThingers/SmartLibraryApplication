@@ -14,6 +14,7 @@
         android:background="#000000ff"
         android:text="Unfortunately user location not available at current time!\nPlease try again later"
         android:gravity="center_vertical"
+        android:textSize="20dp"
         android:textAlignment="center" />
 
     <ImageView

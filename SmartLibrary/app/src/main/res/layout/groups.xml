@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/main_wallpaper"
+        android:textSize="20dp"
         android:layout_weight="1"
         android:drawSelectorOnTop="false"/>
 
@@ -18,15 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000ff"
+        android:textSize="20dp"
         android:text="Unfortunately No Groups in the Library"
         android:gravity="center_vertical"
         android:textAlignment="center" />
 
-    <TextView android:id="@+id/output"
-        android:background="#758AA7"
-        android:layout_height="wrap_content"
-        android:padding="1px"
-        android:textColor="#ffffff"
-        android:text="Click : " android:layout_width="fill_parent" />
+
 
 </LinearLayout>

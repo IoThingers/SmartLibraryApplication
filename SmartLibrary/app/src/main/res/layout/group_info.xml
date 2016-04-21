@@ -5,37 +5,6 @@
     android:id="@+id/linearlayout"
     android:background="@drawable/main_wallpaper">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Group Name : "
-        android:id="@+id/gname" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Creator Name : "
-        android:id="@+id/creator" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Name : "
-        android:id="@+id/coursename" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Room Name : "
-        android:id="@+id/roomname" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current members : "
-        android:id="@+id/members" />
-
     <Button
 
         android:text="Join this Group"
@@ -53,5 +22,43 @@
         android:shadowRadius="5"
         android:alpha="0.7"
         android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group Name : "
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:id="@+id/gname" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Creator Name : "
+        android:textSize="20dp"
+        android:id="@+id/creator" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course Name : "
+        android:textSize="20dp"
+        android:id="@+id/coursename" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room Name : "
+        android:textSize="20dp"
+        android:id="@+id/roomname" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current members : "
+        android:textSize="20dp"
+        android:id="@+id/members" />
+
+
 
 </LinearLayout>

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Create A New Group"
         android:id="@+id/textView" android:layout_gravity="center"
+        android:textSize="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="#000000"/>
@@ -25,7 +26,7 @@
         android:textColor="#000000"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
-        android:textSize="15dp"/>
+        android:textSize="20dp"/>
 
     <EditText
         android:layout_width="200dp"
@@ -35,7 +36,7 @@
         android:textColor="#000000"
         android:layout_alignTop="@+id/textView2"
         android:layout_alignParentRight="true"
-        android:textSize="15dp"/>
+        android:textSize="20dp"/>
 
     <TextView
         android:layout_width="125dp"
@@ -45,7 +46,7 @@
         android:id="@+id/textView3"
         android:layout_below="@+id/textView2"
         android:layout_toLeftOf="@+id/textView"
-        android:textSize="15dp"/>
+        android:textSize="20dp"/>
 
     <ListView
         android:layout_width="200dp"
@@ -56,7 +57,7 @@
         android:listSelector="#666666"
         android:layout_alignTop="@+id/textView3"
         android:layout_alignParentRight="true"
-        android:textSize="15dp"/>
+        android:textSize="20dp"/>
 
 
 
@@ -84,14 +85,6 @@
         android:textColor="#FFFFFF"
         android:layout_marginTop="60dp"
         android:alpha="0.7"/>
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="56dp"
-        android:textColor="#000000"
-        android:id="@+id/register_error"
-        android:layout_below="@+id/registerbutton"
-        android:layout_alignParentRight="true"/>
-
 
 
 </RelativeLayout>

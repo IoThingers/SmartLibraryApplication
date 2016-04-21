@@ -17,8 +17,8 @@
         android:listSelector="#666666"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:textSize="15dp"
-        android:layout_margin="30dp"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:drawSelectorOnTop="false"/>
 
@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000ff"
+        android:textSize="20dp"
         android:text="Unfortunately No Friends in the Library"
         android:gravity="center_vertical"
         android:textAlignment="center" />

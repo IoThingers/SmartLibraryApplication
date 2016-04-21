@@ -16,6 +16,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_wallpaper"
     android:fitsSystemWindows="true"
     tools:context="com.google.android.gms.nearby.messages.samples.nearbybackgroundbeacons.MainActivity">
 
