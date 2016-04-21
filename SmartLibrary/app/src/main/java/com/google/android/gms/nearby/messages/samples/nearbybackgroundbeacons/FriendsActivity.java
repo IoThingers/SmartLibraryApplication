@@ -118,7 +118,7 @@ public class FriendsActivity extends ListActivity {
 
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Friends WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Friends WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -165,7 +165,7 @@ public class FriendsActivity extends ListActivity {
                         if (responsecode == 200) {
 
                             if (users == null) {
-                                Toast.makeText(getApplicationContext(), "Friend is not near any beacon or Enrolled in a group", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Friend is not near any beacon or Enrolled in a group", Toast.LENGTH_SHORT).show();
                             } else {
                                 Intent i = new Intent(FriendsActivity.this, FriendLocationInformationActivity.class);
                                 i.putExtra("group",users.toString());
@@ -181,7 +181,7 @@ public class FriendsActivity extends ListActivity {
 
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Friends WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Friends WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -226,7 +226,7 @@ public class FriendsActivity extends ListActivity {
         //params.put("user-id","258369147");
         Log.i(TAG, "List Selected User:" + params.toString());
         invokeWSFindFriendLocation(params);
-                //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_SHORT).show();
 
     }
 }

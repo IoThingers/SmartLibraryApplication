@@ -125,14 +125,14 @@ public class FriendLocationInformationActivity extends AppCompatActivity {
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("joinedgroupid", groupid);
                             edit.commit();
-                            Toast.makeText(getApplicationContext(), "Succesfully joined group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Succesfully joined group", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Group join failed. Are you already in a group?", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Group join failed. Are you already in a group?", Toast.LENGTH_SHORT).show();
                                 }
                             });
 

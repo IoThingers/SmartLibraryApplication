@@ -95,7 +95,7 @@ public class CoursesActivity extends ListActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 

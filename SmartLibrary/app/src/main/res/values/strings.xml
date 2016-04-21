@@ -34,7 +34,7 @@
     <string name="permission_denied">
         Permission to use Nearby denied. Cannot subscribe.
     </string>
-    <string name="title_text">Google Sign-In\nQuickstart</string>
+    <string name="title_text">Google Sign-In\nAnyone There</string>
 
     <!-- Sign-in status messages -->
     <string name="signed_in_fmt">Signed in as: %s</string>

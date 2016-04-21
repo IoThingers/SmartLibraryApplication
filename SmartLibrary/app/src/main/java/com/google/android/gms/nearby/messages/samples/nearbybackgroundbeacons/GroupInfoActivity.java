@@ -104,14 +104,14 @@ public class GroupInfoActivity extends Activity {
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("joinedgroupid", groupid);
                             edit.commit();
-                            Toast.makeText(getApplicationContext(), "Succesfully joined group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Succesfully joined group", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Group joun failed. Are you having one?", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Group joun failed. Are you having one?", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -185,7 +185,7 @@ public class GroupInfoActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 

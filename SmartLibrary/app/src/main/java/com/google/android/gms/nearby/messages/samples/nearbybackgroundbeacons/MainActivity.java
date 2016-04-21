@@ -53,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 // User was presented with the Nearby opt-in dialog and pressed "Deny". We cannot
                 // subscribe. Reset state.
                 Toast.makeText(this, getResources().getString(R.string.permission_denied),
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
                 mainActivityFragment.resetToDefaultState();
             } else {
                 Toast.makeText(this, "Failed to resolve error with code " + resultCode,
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }

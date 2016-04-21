@@ -57,12 +57,12 @@ public class RoomAvailableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(item==null)
-                    Toast.makeText(getApplicationContext(),"Please Select A Room",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please Select A Room",Toast.LENGTH_SHORT).show();
                 else if(roomsAvailable.get(item).toString().equals("false")){
-                    Toast.makeText(getApplicationContext(),"Sorry The Room Is Occupied",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Sorry The Room Is Occupied",Toast.LENGTH_SHORT).show();
                 }
                 else if(!user.getString("joinedgroupid","-1").equals("-1"))
-                    Toast.makeText(getApplicationContext(),"Sorry you are already enrolled in a Group!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Sorry you are already enrolled in a Group!",Toast.LENGTH_SHORT).show();
                 else{
 
                     invokeWSRoomID(item.split("-")[1]);
@@ -77,7 +77,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
 
                 item = ((TextView) view).getText().toString();
                 positionSelected = position;
-                //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -112,17 +112,17 @@ public class RoomAvailableActivity extends AppCompatActivity {
                             rooms.add(users.get("name").toString() + "-" + users.get("id").toString());
                             adapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_SHORT).show();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                         }
                     } catch (JSONException e) {
-                        Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }
@@ -131,7 +131,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
-                Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_LONG).show();
+                Toast.makeText(RoomAvailableActivity.this, "Sorry server not available! Please try again.", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Suryansh Get room name failed " + content);
             }
         });
@@ -156,7 +156,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
                     /*JSONArray responseArray = null;
                     responseArray = obj.getJSONArray("response");*/
                     if (obj.get("response").toString().equals("false"))
-                        Toast.makeText(getApplicationContext(), "Sorry Room: "+roomID+"not avaiable!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Sorry Room: "+roomID+"not avaiable!", Toast.LENGTH_SHORT).show();
                     else if(obj.get("response").toString().equals("true")){
                         Intent i = new Intent(RoomAvailableActivity.this, CreateGroupActivity.class);
                         i.putExtra("roomid",roomID);
@@ -164,7 +164,7 @@ public class RoomAvailableActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
-                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
 
                 }
@@ -178,15 +178,15 @@ public class RoomAvailableActivity extends AppCompatActivity {
                 /*progressDialog.hide();*/
                 // When Http response code is '404'
                 if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_SHORT).show();
                 }
                 // When Http response code is '500'
                 else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_SHORT).show();
                 }
                 // When Http response code other than 404, 500
                 else {
-                    Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_SHORT).show();
                 }
             }
         });

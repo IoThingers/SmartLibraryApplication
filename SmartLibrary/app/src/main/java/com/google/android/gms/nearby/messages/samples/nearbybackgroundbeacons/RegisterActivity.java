@@ -116,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         creategroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentToast = Toast.makeText(getApplicationContext(),"Searching for a nearby smart space...",Toast.LENGTH_LONG);
+                currentToast = Toast.makeText(getApplicationContext(),"Searching for a nearby smart space...",Toast.LENGTH_SHORT);
                 currentToast.show();
                 subscribe();
             }
@@ -230,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                 invokeWSLeaveGroup(param);
                             break;
 
-                        case "create": currentToast = Toast.makeText(getApplicationContext(),"Searching for a nearby smart space...",Toast.LENGTH_LONG);
+                        case "create": currentToast = Toast.makeText(getApplicationContext(),"Searching for a nearby smart space...",Toast.LENGTH_SHORT);
                             currentToast.show();
                             subscribe();
                             break;
@@ -258,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 mGoogleApiClient.connect();
             }
             Toast.makeText(this, "Press button again - Google API not connected",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -296,7 +296,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 mGoogleApiClient.connect();
             }
             Toast.makeText(this, "Press button again - Google API not connected",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -469,14 +469,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("joinedgroupid", "-1");
                             edit.commit();
-                            Toast.makeText(getApplicationContext(), "Succesfully left group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Succesfully left group", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Invalid group leaving! Do you have a group?", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid group leaving! Do you have a group?", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -518,14 +518,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                             SharedPreferences.Editor edit = userDetails.edit();
                             edit.putString("createdgroupid", "-1");
                             edit.commit();
-                            Toast.makeText(getApplicationContext(), "Succesfully deleted group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Succesfully deleted group", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Invalid group deletion. Are you in a group?", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Invalid group deletion. Are you in a group?", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -541,7 +541,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             public void onFailure(int statusCode, Throwable error,
                                   String content) {
                 Log.i(TAG, "suryansh deleting group failed");
-                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -569,7 +569,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "invokeWSSections WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "invokeWSSections WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -584,7 +584,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             public void onFailure(int statusCode, Throwable error, String content) {
                 super.onFailure(statusCode, error, content);
                 Log.i(TAG, "sharique invokeWSSections onFailure " + content);
-                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Sorry Server not available! Please try again..", Toast.LENGTH_SHORT).show();
             }
         });
     }
