@@ -189,6 +189,7 @@ public class FriendsActivity extends ListActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Your friend is not in any group!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
