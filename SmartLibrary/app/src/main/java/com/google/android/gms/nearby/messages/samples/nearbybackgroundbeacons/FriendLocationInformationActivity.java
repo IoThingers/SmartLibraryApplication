@@ -43,6 +43,7 @@ public class FriendLocationInformationActivity extends AppCompatActivity {
         creatorname = (TextView) findViewById(R.id.creator);
         roomname = (TextView) findViewById(R.id.roomname);
         flocation = (Button) findViewById(R.id.flocation);
+        currentMembers = (ListView) findViewById(R.id.listView);
         gjoin = (Button) findViewById(R.id.gjoin);
         flocation.setText("Locate ("+ intent.getStringExtra("name")+") On Map");
         gjoin.setText("Join ("+ intent.getStringExtra("name")+ "'s) Group");
@@ -80,6 +81,8 @@ public class FriendLocationInformationActivity extends AppCompatActivity {
 
                 Log.i(TAG, "sharique group members " + i + " = " + users.getJSONObject(i).get("name").toString());
             }
+            memberListAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1,memberList);
             currentMembers.setAdapter(memberListAdapter);
 
 

@@ -16,9 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Friend Name : "
+        android:textSize="18dp"
         android:id="@+id/fname"
 
-        android:textSize="20dp" />
+         />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
         android:text="Room Name : "
         android:id="@+id/roomname"
 
-        android:textSize="20dp"/>
+        android:textSize="18dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
         android:text="Group Name : "
         android:id="@+id/gname"
 
-        android:textSize="20dp"/>
+        android:textSize="18dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +43,7 @@
         android:text="Creator Name : "
         android:id="@+id/creator"
 
-        android:textSize="20dp"/>
+        android:textSize="18dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,15 +51,14 @@
         android:text="Course Name : "
         android:id="@+id/coursename"
 
-        android:textSize="20dp"/>
+        android:textSize="18dp"/>
 
     <ListView
         android:layout_width="200dp"
         android:layout_height="150dp"
         android:textColor="#000000"
         android:id="@+id/listView"
-        android:choiceMode="singleChoice"
-        android:listSelector="#666666"
+
         android:layout_alignParentRight="true"
         android:background="@color/blue_grey_500"
         android:alpha="0.7"
@@ -70,13 +70,13 @@
         android:id="@+id/flocation"
         android:layout_margin="15dp"
         android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@drawable/buttonshape"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:textSize="20sp"
+        android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:layout_marginTop="5dp"
         android:alpha="0.7"
@@ -86,16 +86,16 @@
 
         android:text="Join Group"
         android:id="@+id/gjoin"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
 
         android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@drawable/buttonshape"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:textSize="20sp"
+        android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:layout_marginTop="5dp"
         android:alpha="0.7"
