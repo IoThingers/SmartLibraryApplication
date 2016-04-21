@@ -58,7 +58,7 @@ public class FriendsActivity extends ListActivity {
 
         user = getSharedPreferences(getApplicationContext().getPackageName(),
                 Context.MODE_PRIVATE);
-        content = (TextView)findViewById(R.id.output);
+        //content = (TextView)findViewById(R.id.output);
         Log.i(TAG, "sharique oncreate called");
         // Define a new Adapter
         // First parameter - Context

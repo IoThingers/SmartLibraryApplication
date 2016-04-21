@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,11 +39,14 @@ public class GroupInfoActivity extends Activity {
     String groupid;
     String groupname;
     LinearLayout myLinearLayout;
+    ArrayList<String> memberList = new ArrayList<String>();
     LinearLayout.LayoutParams layout_params;
     SharedPreferences user;
+    ArrayAdapter<String> memberListAdapter;
     View view;
     TextView gname, coursename, creatorname, roomname;
     Button joinbutton;
+    ListView currentMembers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,7 @@ public class GroupInfoActivity extends Activity {
         coursename = (TextView) findViewById(R.id.coursename);
         creatorname = (TextView) findViewById(R.id.creator);
         roomname = (TextView) findViewById(R.id.roomname);
+        currentMembers = (ListView) findViewById(R.id.listView);
         myLinearLayout = (LinearLayout) findViewById(R.id.linearlayout);
         joinbutton = (Button) findViewById(R.id.joingroup);
         joinbutton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +79,8 @@ public class GroupInfoActivity extends Activity {
         RequestParams params = new RequestParams();
         params.put("group-id", groupid);
         invokeWS(params, users);
+        memberListAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,memberList);
     }
     private void invokeWStoJoin(RequestParams params)
     {
@@ -160,15 +168,17 @@ public class GroupInfoActivity extends Activity {
                             roomname.setText("Room Name : " + clickedroomname);
                             users = group.getJSONArray("members");
 
+
                             for (int i = 0; i < users.length(); i++) {
+
                                 //members.add(users.getJSONObject(i).get("name").toString());
-                                final TextView temp = new TextView(GroupInfoActivity.this);
-                                temp.setText(users.getJSONObject(i).get("name").toString());
-                                temp.setLayoutParams(layout_params);
-                                myLinearLayout.addView(temp, layout_params);
+                                memberList.add(users.getJSONObject(i).get("name").toString());
+
 
                                 Log.i(TAG, "sharique group members " + i + " = " + users.getJSONObject(i).get("name").toString());
                             }
+                            currentMembers.setAdapter(memberListAdapter);
+
                         }
                         else
                         {
