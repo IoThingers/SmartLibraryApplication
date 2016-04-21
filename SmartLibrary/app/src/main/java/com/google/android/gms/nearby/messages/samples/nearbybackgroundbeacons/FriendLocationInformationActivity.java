@@ -96,7 +96,7 @@ public class FriendLocationInformationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 RequestParams p = new RequestParams();
                 SharedPreferences user = getSharedPreferences(getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
-                p.put("user-id", intent.getStringExtra("id"));
+                p.put("user-id", user.getString("userid","-1"));
                 p.put("group-id", groupid);
                 invokeWStoJoin(p);
             }
