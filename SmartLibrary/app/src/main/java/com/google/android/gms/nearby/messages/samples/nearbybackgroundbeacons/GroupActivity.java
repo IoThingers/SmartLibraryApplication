@@ -92,7 +92,8 @@ public class GroupActivity extends ListActivity {
                                 groups.add(users.getJSONObject(i).get("name").toString() + "-" + users.getJSONObject(i).get("id").toString());
                                 Log.i(TAG, "sharique groups " + i + " = " + users.getJSONObject(i).get("name").toString());
                             }
-                            adapter.notifyDataSetChanged();
+                            Log.i(TAG, "sharique group click response code : " + responsecode);
+                                    adapter.notifyDataSetChanged();
                         }
                         else
                         {
@@ -100,7 +101,7 @@ public class GroupActivity extends ListActivity {
 
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 

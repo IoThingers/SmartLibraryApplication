@@ -83,16 +83,16 @@ public class HomeActivity extends Activity {
                                 edit.putString("userid", ufid.getText().toString());
                                 edit.putString("major", major.getText().toString());
                                 edit.commit();
-                                Toast.makeText(getApplicationContext(), "User created succesfully ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "User created succesfully ", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(HomeActivity.this, RegisterActivity.class));
                             }
 
                             else
-                                Toast.makeText(getApplicationContext(), "User creation failed ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "User creation failed ", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(), "User creation response code = " + responsecode, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "User creation response code = " + responsecode, Toast.LENGTH_SHORT).show();
                         }
                     }
                     catch (JSONException ex)
@@ -107,22 +107,22 @@ public class HomeActivity extends Activity {
                 public void onFailure(int statusCode, Throwable error,
                                       String content) {
                     if(statusCode == 404){
-                        Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_SHORT).show();
                     }
                     // When Http response code is '500'
                     else if(statusCode == 500){
-                        Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_SHORT).show();
                     }
                     // When Http response code other than 404, 500
                     else{
-                        Toast.makeText(getApplicationContext(), "Create User API Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Create User API Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
         catch (UnsupportedEncodingException ex)
         {
-            Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not register", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not register", Toast.LENGTH_SHORT).show();
         }
     }
 }

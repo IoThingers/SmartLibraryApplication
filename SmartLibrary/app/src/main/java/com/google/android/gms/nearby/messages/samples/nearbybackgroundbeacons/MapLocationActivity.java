@@ -25,7 +25,7 @@ public class MapLocationActivity extends AppCompatActivity {
             img.setImageDrawable(drawable);
         }
         catch(Exception e){
-            Toast.makeText(getApplicationContext(),"Location Not Available! Try Later",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Location Not Available! Try Later",Toast.LENGTH_SHORT).show();
         }
 
     }

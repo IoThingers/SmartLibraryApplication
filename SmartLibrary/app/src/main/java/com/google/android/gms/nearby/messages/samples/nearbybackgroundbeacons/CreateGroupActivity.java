@@ -54,7 +54,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         courseList = (ListView) findViewById(R.id.listView);
         invokeWS(courses);
 
-        //Toast.makeText(getApplicationContext(),"the user id is "+userID,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"the user id is "+userID,Toast.LENGTH_SHORT).show();
         String groupName = findViewById(R.id.textView2).toString();
 
         adapter = new ArrayAdapter<String>(this,
@@ -72,7 +72,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                 item = ((TextView) view).getText().toString();
                 positionSelected = position;
-                //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), String.valueOf(positionSelected), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -86,7 +86,7 @@ public class CreateGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (item == null)
-                    Toast.makeText(getBaseContext(), "Please Select a Course", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Please Select a Course", Toast.LENGTH_SHORT).show();
                 else {
                     String courseName, roomName, groupName;
                     int roomID, courseID, userID;
@@ -104,7 +104,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     //courseID = courseIDName.get(item);
                     //Log.i(TAG,courseNameIDMap.toString());
                     /*if(courseNameIDMap.containsKey("ANALYSIS OF ALGORITHMS=3"))
-                        Toast.makeText(getBaseContext(), courseName + " " + courseNameIDMap.get("ANALYSIS OF ALGORITHMS=3"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), courseName + " " + courseNameIDMap.get("ANALYSIS OF ALGORITHMS=3"), Toast.LENGTH_SHORT).show();
                     //courseID = courseIDName.get(courseName).toString();*/
                     Bundle bund = getIntent().getExtras();
                     roomID = Integer.parseInt(bund.getString("roomid"));
@@ -158,7 +158,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Groups WebApi response code failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -202,11 +202,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                             edit.putString("createdgroupid", String.valueOf(groupID));
                             edit.putString("joinedgroupid",String.valueOf(groupID));
                             edit.commit();
-                            Toast.makeText(getApplicationContext(), "Group created succesfully with GroupID: " + String.valueOf(groupID), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Group created succesfully with GroupID: " + String.valueOf(groupID), Toast.LENGTH_SHORT).show();
                         }
 
                         else
-                            Toast.makeText(getApplicationContext(), "Group creation failed ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Group creation failed ", Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -217,22 +217,22 @@ public class CreateGroupActivity extends AppCompatActivity {
                 public void onFailure(int statusCode, Throwable error,
                                       String content) {
                     if(statusCode == 404){
-                        Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_SHORT).show();
                     }
                     // When Http response code is '500'
                     else if(statusCode == 500){
-                        Toast.makeText(getApplicationContext(), "Create Group Something went wrong at server end", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Create Group Something went wrong at server end", Toast.LENGTH_SHORT).show();
                     }
                     // When Http response code other than 404, 500
                     else{
-                        Toast.makeText(getApplicationContext(), "Create Group Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Create Group Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
         catch (UnsupportedEncodingException ex)
         {
-            Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not Group User", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "UnsupportedEncodingException - Could not Group User", Toast.LENGTH_SHORT).show();
         }
     }
 
